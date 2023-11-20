@@ -5,7 +5,6 @@ import { createBrowserClient } from '@supabase/ssr'
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -27,7 +26,7 @@ export default function SignInpage() {
    const handleSubmit = async (e:FormEvent<HTMLFormElement>)=>{
       e.preventDefault()
       //create a supabase instance 
-       const supabase = createBrowserClient(
+       const supabase = createBrowserClient<Database>(
        process.env.NEXT_PUBLIC_SUPABASE_URL!,
        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     )
