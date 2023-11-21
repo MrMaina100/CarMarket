@@ -94,7 +94,7 @@ export default function SignInpage() {
 
              </div>
 
-            <div className="flex justify-between mt-5">
+            <div className="flex justify-between mt-5 items-center">
             <Link href='/signin'>
             <p className="text-xs ">Already have an Account? Login</p>
             </Link>

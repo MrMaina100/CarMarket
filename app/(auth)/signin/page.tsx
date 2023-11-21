@@ -38,8 +38,9 @@ export default function SignInPage() {
     if(error){
       alert(error.message)
     }else{
-      router.refresh()
+    
       router.push('/')
+      router.refresh()
 
     }
 
@@ -68,6 +69,7 @@ export default function SignInPage() {
 
                <Label htmlFor="password">Password</Label>
                <Input
+               type="password"
                id="password"
                value={password}
                onChange={(e)=>setPassword(e.target.value)}               
