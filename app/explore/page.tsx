@@ -9,6 +9,8 @@ import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 
+import CarCards from '@/components/ui/CarCard'
+
 export default async function Explorepage() {
   const cookieStore = cookies()
   const supabase = createServerClient<Database>(
@@ -31,10 +33,23 @@ export default async function Explorepage() {
          {/*the cards will go here  */}
         {data ? (
          data.map((apiData)=>(
-            <Card key={apiData.id} className='w-[350px]'>
+          <CarCards  data = {apiData}/>     
+               
+        
+         ))
+        ):(
+         <>
+         <p>No cars to display at the moment</p>
+         
+         </>
+        )}
+        
+      </div>
+
+       {/* <Card key={apiData.id} className='w-[350px]'>
               <Link href={`/explore/${apiData.id}`}>
                 <CardContent  className="grid gap-4">
-                  {/* image will go here */}
+                 
                   <Separator/>
                   <Badge className='w-16' variant='outline'>
                      {apiData.year}
@@ -52,19 +67,8 @@ export default async function Explorepage() {
                </CardContent>
               </Link>
                
-            </Card>
+            </Card> */}
 
-               
-        
-         ))
-        ):(
-         <>
-         <p>No cars to display at the moment</p>
-         
-         </>
-        )}
-        
-      </div>
     </div>
   )
 }
