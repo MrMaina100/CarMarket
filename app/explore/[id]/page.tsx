@@ -55,7 +55,7 @@ export default async function CarListing({params : {id}}: {params:{id:string}}) 
         <div className='flex justify-between'>
           <p>Engine Size</p>
           <p>{data.engine_size}</p>
-        Separator</div>
+        </div>
         <Separator/>
         <div className='flex justify-between'>
           <p>Fuel Type</p>
