@@ -50,6 +50,11 @@ export default function ProfileComponent() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
+        <DropdownMenuItem>
+          <Link href='/profile'>
+            Visit profile
+          </Link>
+        </DropdownMenuItem>
         {/* my profile */}
         <DropdownMenuItem>
           <Link href='/createpost'>Create post</Link>
