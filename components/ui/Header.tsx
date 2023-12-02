@@ -28,8 +28,8 @@ export default async function Header() {
   
   return (
     <>
-    <div className="bg-black text-white p-2 flex justify-between">
-      <h1>Car Market</h1>
+    <div className=" p-2 flex justify-between relative z-20 ">
+      <h1 className="font-bold ">Turbo Trader</h1>
 
       {session ? (
         <ProfileComponent/>
@@ -45,7 +45,7 @@ export default async function Header() {
 
          </Button>
 
-          <Button asChild variant='secondary' className="px-5">
+          <Button asChild  className="px-5">
             <Link href='/signup'>
                Join
             
