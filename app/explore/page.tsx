@@ -33,7 +33,7 @@ export default async function Explorepage() {
          {/*the cards will go here  */}
         {data ? (
          data.map((apiData)=>(
-          <CarCards  data = {apiData}/>     
+          <CarCards key={apiData.id}  data = {apiData}/>     
                
         
          ))
