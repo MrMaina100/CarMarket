@@ -1,103 +1,27 @@
-'use client'
-
-import { FormEvent, useState } from "react"
-import { createBrowserClient } from "@supabase/ssr"
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import SignInForm from "./SignInForm"
 
-export default function SignInPage() {
-
-   const [email, setEmail] = useState('')
-   const [password, setPassword] = useState('')
-   const router = useRouter()
-
-   const handleSubmit = async(e:FormEvent<HTMLFormElement>)=>{
-      e.preventDefault()
-      //create supabase instance 
-     const supabase = createBrowserClient<Database>(
-     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    )
-
-    const {error} = await supabase.auth.signInWithPassword(
-      {
-         email,
-         password,
-      }
-    )
-
-    if(error){
-      alert(error.message)
-    }else{
-    
-      router.push('/')
-      router.refresh()
-
-    }
-
-
-   }
+export default function SignInPage() { 
 
   return (
     <>
+    <div className="container h-screen w-screen flex flex-col items-center justify-center">
+      <Link href='/' className="absolute left-4 top-4 md:left-8 md:top-8">
+         <Button>
+            Back
+         </Button>
+      </Link>
 
-    <div className="flex justify-center">
-      <Card className="w-[450px]">
-         <CardHeader>
-            <CardTitle> Welcome Back </CardTitle>
-         </CardHeader>
-         <CardContent>
+      <div className="mx-auto space-y-4 justify-center sm:w-[360px]">
+      <h1 className="text-xl font-semibold tracking-tight">
+                Welcome back
+              </h1>
+         <SignInForm/>
 
-          <form onSubmit={handleSubmit}>
-            <div className="grid w-full items-center gap-2">
-               <Label htmlFor="email">Email</Label>
-               <Input
-               id="email"
-               value={email}
-               onChange={(e)=>setEmail(e.target.value)}
-               
-               />
-
-               <Label htmlFor="password">Password</Label>
-               <Input
-               type="password"
-               id="password"
-               value={password}
-               onChange={(e)=>setPassword(e.target.value)}               
-               />
-
-               <div className="flex justify-between items-center">
-                  <Link href='forgotpassword'>
-                     <p className="text-xs">
-                        Forgot password? Reset
-                     </p>
-                  </Link>
-
-                  <Button>
-                     Log in 
-                  </Button>
-
-               </div>
-            </div>
-
-            
-          </form>
-
-         </CardContent>
-        
-      </Card>
+      </div>
 
     </div>
-
 
     </>
   )
