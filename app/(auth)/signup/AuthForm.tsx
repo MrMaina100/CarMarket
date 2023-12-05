@@ -8,6 +8,8 @@ import { Label } from "@/components/ui/label"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
+import { toast } from "sonner"
+import GithubButton from "@/components/ui/GithubButton"
 
 import supabaseClient from "@/lib/utilities/supabaseClient"
 
@@ -45,8 +47,8 @@ export default function AuthForm() {
 
     }
          
-      } catch (error) {
-         console.log('something went wrong');
+   } catch (error) {
+         toast.error('something went wrong');
          
 
 
@@ -91,14 +93,7 @@ export default function AuthForm() {
                
                />
 
-             </div>
-
-            <div className="flex justify-between mt-5 items-center">
-            <Link href='/signin'>
-            <p className="text-xs ">Already have an Account? Login</p>
-            </Link>
-
-            <Button 
+               <Button 
             type="submit"
             disabled={isLoading}
             
@@ -110,12 +105,33 @@ export default function AuthForm() {
                Sign up
             </Button>
 
-         </div>
+             <div className="relative mt-2">
+               <div className="absolute inset-0 flex items-center">
+               <span className="w-full border-t" />
+               </div>
+               <div className="relative flex justify-center text-xs  uppercase">
+                <span className="bg-background px-2 text-muted-foreground">
+                Or continue with
+                </span>
+                </div>
+             </div>
+
+             <GithubButton/>
+
+             </div>
+
+            <div className="flex justify-between mt-2 items-center">
+            <Link href='/signin'>
+            <p className="text-xs ">Already have an Account? Login</p>
+            </Link>         
+
+            </div>
+           
 
               
 
 
-            </form>
+         </form>
     </div>
   )
 }
