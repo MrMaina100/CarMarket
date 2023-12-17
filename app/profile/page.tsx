@@ -1,4 +1,4 @@
-import { createServerClient, type CookieOptions } from '@supabase/ssr'
+import { createClient } from '@/lib/utilities/supabaseServer'
 import { cookies } from 'next/headers'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
@@ -9,21 +9,11 @@ import CarCard from '@/components/ui/CarCard'
 
 export default async function page() {
   const cookieStore = cookies()
-  const supabase = createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return cookieStore.get(name)?.value
-        },
-      },
-    }
-  )
+  const supabase = createClient(cookieStore)
 
   const {data : {user}} = await supabase.auth.getUser()
   const userid = user?.id
-  console.log(user?.id);
+  
   
     
   const {data : cars} = await supabase
@@ -34,7 +24,7 @@ export default async function page() {
   
  
   return (
-    <div>
+    <div className='space-y-4 p-4'>
 
       <div className='flex justify-between p-2'>
        <p>
@@ -50,10 +40,12 @@ export default async function page() {
         </Link>
 
       </Button>
+      <h1>Your recent posts</h1>
 
+     <div className='flex flex-col space-y-4 items-center md:flex-row md:space-y-0 md:space-x-4'>      
       {cars ? (
         <>
-        <h1>Your recent posts</h1>
+        
         {cars?.map((apiData)=>(
         <div key={apiData.id}>
         <CarCard  data={apiData} />
@@ -66,18 +58,10 @@ export default async function page() {
         No recent Listings created
         </>
 
-      )}
+      )}  
 
-     
-
+     </div>
       
-      
-
-       
-
-
-     
-
 
     </div>
   )
