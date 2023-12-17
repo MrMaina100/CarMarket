@@ -9,10 +9,14 @@ import { useRouter } from "next/navigation"
 import { ChangeEvent,  FormEvent, useState } from "react"
 import { Session } from "@supabase/supabase-js"
 import supabaseClient from "@/lib/utilities/supabaseClient"
+import { Icons } from "@/components/ui/icons"
+import { toast } from "sonner"
 
 export default function Form({session}:{session: Session | null}) {
   const route = useRouter( )
 
+  const [isLoading, setIsLoading] = useState(false)
+  const [imageUploading, setImageUploading] = useState(false)
   const [formData , setFormData] = useState({
     car_name:'',
     year:'',
@@ -25,9 +29,7 @@ export default function Form({session}:{session: Session | null}) {
     price:'',
     image_url: []
   })
-   const user = session?.user
- 
-  
+   const user = session?.user  
 
   const {car_name, year, engine_size, drive, fuel_type, transmission, mileage, location, price, image_url} = formData
 
@@ -42,6 +44,9 @@ export default function Form({session}:{session: Session | null}) {
  const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
   const files = e.target.files;  
   if(files){
+    try {
+
+    setImageUploading(true)  
     const imageUrls: string[] = []
     for(const file of files){
       const fileExt = file.name.split('.').pop()
@@ -58,6 +63,14 @@ export default function Form({session}:{session: Session | null}) {
       ...prevState,
       image_url: imageUrls as any
     }))
+      
+    } catch (error) {
+      toast.error('uploading images failed')
+      
+    }finally{
+      setImageUploading(false)
+    }    
+    
   }
 };
 
@@ -68,25 +81,26 @@ export default function Form({session}:{session: Session | null}) {
   const handleSubmit = async(e:FormEvent<HTMLFormElement>)=>{
     e.preventDefault()
 
-
-    // need a supabase instance 
-     const supabase = createBrowserClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-   )
-
-
    if(user){  
-    
-      
-    await supabase.from('cars').insert({
+    try {
+      setIsLoading(true)
+      await supabaseClient.from('cars').insert({
       ...formData,
       user_id : user.id
     }) 
-    
+      
+    } catch (error) {
+      toast.error('something went wrong')
+      console.log(error);  
+
+      
+    } finally{
+    setIsLoading(false)
     route.push('/explore')
     route.refresh()
 
+    }  
+ 
    }
   }
    
@@ -159,22 +173,30 @@ export default function Form({session}:{session: Session | null}) {
         />
 
         {/* image uploads */}
-        <Label htmlFor="image_urls">Images</Label>
+        <Label htmlFor="image_urls">
+          {imageUploading ? 'uploading images' : 'Upload Images'}
+        </Label>
         <Input
         type="file"
         name="image_urls"
         accept="image/*"
         multiple
-        onChange={handleImageChange}
-        
+        onChange={handleImageChange}       
         
         />      
      
 
         </div>
-        <Button type="submit">
-          create a post
-        </Button>
+        <Button 
+            type="submit"
+            disabled={imageUploading}             
+            >
+               {isLoading &&(
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin"/>
+
+               )}
+               Create Post
+            </Button>
 
        
 
