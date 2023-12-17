@@ -12,7 +12,7 @@ export default async function Explorepage() {
   return (
     <div>
       <h1>View a variety of cars</h1>
-      <div className="mt-2 flex flex-col space-4 items-center md:flex-row md:space-x-8 md:space-y-0">
+      <div className="mt-2 flex flex-col space-y-4 items-center md:flex-row md:space-x-8 md:space-y-0">
 
          {/*the cards will go here  */}
         {data ? (
