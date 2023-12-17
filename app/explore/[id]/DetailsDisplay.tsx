@@ -27,7 +27,7 @@ export default function DetailsDisplay({data , session}:{
    
   return (
     <>
-    <div className='flex flex-col space-y-4 items-center md:flex-row  md:space-y-0'>
+    <div className='flex flex-col space-y-4 p-4 items-center md:flex-row  md:space-y-0'>
       {/* images will go here */}
       <div className='h-80 w-96 md:w-1/2'>
         <Swiper navigation={true} modules={[Navigation]}>            
@@ -92,9 +92,10 @@ export default function DetailsDisplay({data , session}:{
         <div className='flex justify-between'>
           <p>Year of manufacture</p>
           <p>{data.year}</p>
-        </div>       
+        </div>  
 
-        {
+        <div className='mt-2'>
+          {
           data.id !== userId && (
             <div>
               <Button asChild>
@@ -104,6 +105,10 @@ export default function DetailsDisplay({data , session}:{
             </div>
           )
         }   
+        
+        </div>     
+
+        
 
       </div>
 
