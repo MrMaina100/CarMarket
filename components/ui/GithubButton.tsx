@@ -16,7 +16,7 @@ export default function GithubButton() {
          await supabaseClient.auth.signInWithOAuth({
             provider:'github',
             options:{
-               redirectTo: 'http://localhost:3000/api/auth/confirm'
+               redirectTo: `${location.origin}/api/auth/confirm`
             }
          })
          

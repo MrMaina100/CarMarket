@@ -33,7 +33,7 @@ export default function DetailsDisplay({data , session}:{
         <Swiper navigation={true} modules={[Navigation]}>            
             {
                data.image_url?.map((images:string)=>(
-                  <SwiperSlide>
+                  <SwiperSlide key={data.id}>
                     <div className='w-96 h-80'>
                       
                       <Image src={`https://uqvgrgiggdjwexfirrqu.supabase.co/storage/v1/object/public/car_images/${images}`} alt='multiple car images' width={200} height={300} priority className='w-full h-full object-cover' />  

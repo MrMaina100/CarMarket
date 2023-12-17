@@ -32,7 +32,7 @@ export default function AuthForm() {
          email,
          password,
          options:{
-            emailRedirectTo:'http://localhost:3000/api/auth/confirm',
+            emailRedirectTo:`${location.origin}/api/auth/confirm`,
             data:{
               userName
             }

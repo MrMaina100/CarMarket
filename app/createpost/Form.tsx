@@ -103,8 +103,8 @@ export default function Form({session}:{session: Session | null}) {
   }
    
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className=" flex justify-center ">
+      <form onSubmit={handleSubmit} className="w-90  md:w-1/2 md:shadow-xl p-8">
         <div className="grid gap-2 items-center">
         <Label htmlFor="car_name">Car Name</Label>
         <Input

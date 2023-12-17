@@ -14,8 +14,8 @@ export default async function CreatepPostpage() {
     
   }
   return (
-    <div>
-      <h1>Create your own listing, let people bid on your car</h1>
+    <div className="p-2">
+      <h1>Post your car, let people bid on it</h1>
       <Form session={session}/>            
 
     </div>
