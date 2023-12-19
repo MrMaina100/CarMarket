@@ -1,11 +1,7 @@
 import { createClient } from '@/lib/utilities/supabaseServer'
 import { cookies } from 'next/headers'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-
-import CarCard from '@/components/ui/CarCard'
-
-
+import { redirect } from 'next/navigation'
+import ProfileComponent from './Profilepage'
 
 export default async function page() {
   const cookieStore = cookies()
@@ -20,49 +16,14 @@ export default async function page() {
   .from('cars')
   .select()
   .eq('user_id', userid as string) 
+
+  const {data : {session}} = await supabase.auth.getSession()
   
-  
+  if(!session) {
+    redirect('/signin')
+
+
+  }
  
-  return (
-    <div className='space-y-4 p-4'>
-
-      <div className='flex justify-between p-2'>
-       <p>
-        hey there {user?.email}
-       </p>
-
-       {/*our sign out btn  */} 
-
-      </div>
-      <Button asChild>
-        <Link href='/createpost'>
-          Post your Car
-        </Link>
-
-      </Button>
-      <h1>Your recent posts</h1>
-
-     <div className='flex flex-col space-y-4 items-center md:flex-row md:space-y-0 md:space-x-4'>      
-      {cars ? (
-        <>
-        
-        {cars?.map((apiData)=>(
-        <div key={apiData.id}>
-        <CarCard  data={apiData} />
-        </div>
-      ))}
-        </>
-
-      ) :(
-        <>
-        No recent Listings created
-        </>
-
-      )}  
-
-     </div>
-      
-
-    </div>
-  )
+  return <ProfileComponent user={user} cars={cars}/>
 }
