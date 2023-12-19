@@ -17,8 +17,7 @@ import { Navigation } from "swiper/modules";
 
 
 export default function DetailsDisplay({
-  data,
-  user,
+  data,  
   session
 }: {
   data: PropTypes
