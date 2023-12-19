@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { PropTypes } from "@/lib/types";
-import { Session } from "@supabase/supabase-js";
+import { User, Session } from "@supabase/supabase-js";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 //swiper styles
@@ -15,14 +15,19 @@ import "swiper/css/navigation";
 //required modules
 import { Navigation } from "swiper/modules";
 
+
 export default function DetailsDisplay({
   data,
-  session,
+  user,
+  session
 }: {
-  data: PropTypes;
-  session: Session | null;
+  data: PropTypes
+ 
+  session: Session | null
 }) {
-  const userId = session?.user.id;
+  const userId = session?.user.id
+   
+  
 
   return (
     <>
@@ -91,7 +96,7 @@ export default function DetailsDisplay({
           </div>
 
           <div className="mt-2">
-            {data.id !== userId && (
+            {data.user_id !== userId && (
               <div>
                 <Button asChild>
                   <Link href={`mailto:${data.profiles?.email}`}>

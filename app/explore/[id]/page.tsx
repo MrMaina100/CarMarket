@@ -8,11 +8,12 @@ export default async function CarListing({params : {id}}: {params:{id:string}}) 
   const supabase = createClient(cookieStore)  
   const {data } = await supabase.from('cars').select('*, profiles(*)').match({id}).single() 
   const {data:{session}} =  await supabase.auth.getSession()
+ 
   
   if(!data){
     return <p>something went wrong, it not you its us</p>
   }
  
-  return <DetailsDisplay data={data} session={session}/>
+  return <DetailsDisplay data={data}  session={session}/>
 
 }

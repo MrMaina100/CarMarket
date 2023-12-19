@@ -1,5 +1,6 @@
 export type PropTypes = {    
     id?:string,
+    user_id?: string
     car_name: string | null,
     year: string | null,
     engine_size:string | null,
