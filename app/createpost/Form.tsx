@@ -187,7 +187,8 @@ export default function Form({session}:{session: Session | null}) {
         </div>
         <Button 
             type="submit"
-            disabled={imageUploading}             
+            disabled={imageUploading} 
+            className="mt-1"            
             >
                {isLoading &&(
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin"/>
