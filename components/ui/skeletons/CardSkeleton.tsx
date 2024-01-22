@@ -1,9 +1,17 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function SkeletonCards(){
+import { cookies } from 'next/headers';
+import { createClient } from '@/lib/utilities/supabaseServer';
+
+export async function SkeletonCards(){
+
+  const cookieStore = cookies()
+  const supabase = createClient(cookieStore)
+  const { data} = await supabase.from('cars').select()
    return(
       <>
-      <div className="mt-2 flex flex-col space-4 items-center md:flex-row md:space-x-8 md:space-y-0">
+      {data && data.map((apiData)=>(
+          <div key={apiData.id} className="mt-2 flex flex-col space-4 items-center md:flex-row md:space-x-8 md:space-y-0">
          <Skeleton className="w-72">
             <div className="grid gap-2 p-2 h-34">
                {/* img */}
@@ -11,13 +19,13 @@ export function SkeletonCards(){
                <Skeleton className="w-16"/>
                <Skeleton className="w-16"/>
                <Skeleton className="w-16"/>
-
-
-
             </div>
 
          </Skeleton>
       </div>
+
+      ))}
+     
       </>
    )
 }

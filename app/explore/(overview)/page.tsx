@@ -1,31 +1,18 @@
-import CarCards from '@/components/ui/CarCard'
-import { cookies } from 'next/headers';
-import { createClient } from '@/lib/utilities/supabaseServer';
+import { Suspense } from "react"
+import CarCards from "@/components/ui/CarCard"
+import { SkeletonCards } from "@/components/ui/skeletons/CardSkeleton"
 
-export default async function Explorepage() {
 
-  const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
-  const { data} = await supabase.from('cars').select()
 
-  
+export default  function Explorepage() {  
   return (
     <div>
       <h1>View a variety of cars</h1>
-      <div className="mt-2 flex flex-col space-y-4 items-center md:flex-row md:space-x-8 md:space-y-0">
+      <div className="mt-2  flex flex-col space-y-4 items-center md:flex-row md:space-x-4 md:space-y-0 md:px-4">
 
-         {/*the cards will go here  */}
-        {data ? (
-         data.map((apiData)=>(
-          <CarCards key={apiData.id}  data={apiData}/>          
-        
-         ))
-        ):(
-         <>
-         <p>No cars to display at the moment</p>
-         
-         </>
-        )}
+        <Suspense fallback={<SkeletonCards/>}>
+          <CarCards/>
+        </Suspense>        
         
       </div>
 
