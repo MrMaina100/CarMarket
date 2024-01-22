@@ -36,7 +36,7 @@ export default function ProfileComponent({user, cars}:{
         
         {cars?.map((apiData:PropTypes)=>(
         <div key={apiData.id}>
-        <CarCard  data={apiData} />
+        <CarCard/>
         </div>
       ))}
         </>
