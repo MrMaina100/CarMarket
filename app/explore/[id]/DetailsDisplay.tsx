@@ -15,6 +15,16 @@ import "swiper/css/navigation";
 //required modules
 import { Navigation } from "swiper/modules";
 
+//shadcn 
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+
+
 
 export default function DetailsDisplay({
   data,  
@@ -32,11 +42,13 @@ export default function DetailsDisplay({
     <>
       <div className="flex flex-col space-y-4 p-4 items-center md:flex-row  md:space-y-0">
         {/* images will go here */}
-        <div className="h-80 w-96 md:w-1/2  bg-gray-200">
-          <Swiper navigation={true} modules={[Navigation]}>
-            {data.image_url?.map((images: string) => (
-              <SwiperSlide key={data.id}>
-                <div className="w-full h-80 ">
+        <div className="h-80 w-96 md:w-1/2 ">
+         <Carousel className="">
+
+          <CarouselContent>
+            {data.image_url?.map((images:string)=>(
+              <CarouselItem key={data.id}>
+                <div className="w-full h-80">
                   <Image
                     src={`https://uqvgrgiggdjwexfirrqu.supabase.co/storage/v1/object/public/car_images/${images}`}
                     alt="multiple car images"
@@ -46,9 +58,16 @@ export default function DetailsDisplay({
                     className="w-full h-full object-cover"
                   />
                 </div>
-              </SwiperSlide>
+
+              </CarouselItem>
             ))}
-          </Swiper>
+            
+          </CarouselContent>
+           <CarouselPrevious className="absolute left-2 bg-white"/>
+          <CarouselNext className="absolute right-1 bg-white "/>
+         
+
+         </Carousel>
         </div>
 
         {/* car details */}
