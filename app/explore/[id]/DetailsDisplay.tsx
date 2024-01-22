@@ -6,14 +6,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { PropTypes } from "@/lib/types";
 import { User, Session } from "@supabase/supabase-js";
-import { Swiper, SwiperSlide } from "swiper/react";
 
-//swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-
-//required modules
-import { Navigation } from "swiper/modules";
 
 //shadcn 
 import {
