@@ -13,9 +13,9 @@ import { createClient } from '@/lib/utilities/supabaseServer';
 
 export default async function CarCards() { 
 
-     const cookieStore = cookies()
+   const cookieStore = cookies()
   const supabase = createClient(cookieStore)
-  const { data} = await supabase.from('cars').select()
+  const { data} = await supabase.from('cars').select().order('created_at',{ascending:false})
   return (
          <>
          {
