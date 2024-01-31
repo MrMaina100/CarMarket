@@ -157,7 +157,7 @@ export default function CreatePostForm({session}:{session: Session | null}) {
         <Input
         type="file"        
         accept="image/*"
-        {...register('image_url',)}
+        {...register('image_url',{required:'Field cannot be empty'})}
         multiple        
        
         />
