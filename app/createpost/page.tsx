@@ -1,7 +1,7 @@
-import Form from "@/app/createpost/Form"
 import { createClient } from "@/lib/utilities/supabaseServer"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
+import CreatePostForm from "./CreatePostForm"
 
 
 export default async function CreatepPostpage() {
@@ -16,7 +16,7 @@ export default async function CreatepPostpage() {
   return (
     <div className="p-2">
       <h1>Post your car, let people bid on it</h1>
-      <Form session={session}/>            
+      <CreatePostForm session={session}/>            
 
     </div>
   )

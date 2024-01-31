@@ -1,7 +1,5 @@
 'use client'
 
-import { FormEvent, useState } from "react"
-
 import { Icons } from "@/components/ui/icons"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -10,95 +8,88 @@ import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import GithubButton from "@/components/ui/GithubButton"
-
 import supabaseClient from "@/lib/utilities/supabaseClient"
+
+
+//react hook form
+import {useForm,type FieldValues, } from 'react-hook-form'
+
 
 export default function AuthForm() {
 
-   const [isLoading, setIsLoading] = useState<boolean>(false)
-   const [userName, setName] = useState('')
-   const [email, setEmail] = useState('')
-   const [password, setPassword] = useState('')
+   const {register, reset, handleSubmit,  formState:{errors, isSubmitting}} = useForm()
    const router = useRouter()
 
-   const handleSubmit = async (e:FormEvent<HTMLFormElement>)=>{
-      e.preventDefault()
+   const onSubmit = async (data:FieldValues)=>{
 
       try {
-
-         setIsLoading(true)
-         const { error} = await supabaseClient.auth.signUp(
-      {
-         email,
-         password,
-         options:{
-            emailRedirectTo:`${location.origin}/api/auth/confirm`,
-            data:{
-              userName
-            }
+      const {error} = await supabaseClient.auth.signUp({
+      email:data.email,
+      password:data.password,      
+      options:{
+         emailRedirectTo: `${location.origin}/api/auth/confirm`,
+         data:{
+            userName: data.userName
          }
+              
+      }   
+      })
 
+      if(error){
+         toast.error(error.message)
+      }else{
+         router.push('/confirmation')
       }
-    )
-    if(error){
-      alert(error.message)
-    }else{
-      router.push('/confirmation')
-
-    }
          
-   } catch (error) {
-         toast.error('something went wrong');
-         
-
-
+      } catch (error) {
+         console.log('Something went wrong');        
          
       }finally{
-         setIsLoading(false)
-      }
-    
+         reset()
 
+      } 
     
    }
+
+
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
              <div className="grid items-center gap-2">
                <Label htmlFor="userName">Name</Label>
                <Input
-               id="userName"
-               value={userName}
-               onChange={(e)=>setName(e.target.value)}
-               
+               type="text"
+               {...register('userName', {required:"UserName is required"})}               
                />
+               {errors.userName&&(<p className="text-xs text-red-500">
+                {`${errors.userName.message}`}
+               </p>)}
+
                <Label htmlFor="email">Email</Label>
                <Input
-               id="email"
-               value={email}
-               placeholder="name@example.com"
                type="email"
-               autoCapitalize="none"
-               autoComplete="email"
-               autoCorrect="off"
-               disabled={isLoading}
-               onChange={(e)=>setEmail(e.target.value)}
-               
+               {...register('email', {required:"Email is required"})}
+               placeholder="name@example.com"   
                />
+               {errors.email&&(<p className="text-xs text-red-500">
+                {`${errors.email.message}`}
+               </p>)}
+
                <Label htmlFor="password">Password</Label>
                <Input
                type="password"
-               id="password"
-               value={password}
-               onChange={(e)=>setPassword(e.target.value)}
-               
+               {...register('password', {required:'Must create a password'})}               
                />
+               {errors.password&&(<p className="text-xs text-red-500">
+                {`${errors.password.message}`}
+               </p>)}
 
                <Button 
             type="submit"
-            disabled={isLoading}
+            disabled={isSubmitting}
             
             >
-               {isLoading &&(
+               {isSubmitting &&(
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin"/>
 
                )}
@@ -125,11 +116,7 @@ export default function AuthForm() {
             <p className="text-xs ">Already have an Account? Login</p>
             </Link>         
 
-            </div>
-           
-
-              
-
+            </div>      
 
          </form>
     </div>

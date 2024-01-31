@@ -1,6 +1,5 @@
 'use client'
 import supabaseClient from "@/lib/utilities/supabaseClient"
-import { FormEvent, useState } from "react"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { useRouter } from "next/navigation"
@@ -9,66 +8,62 @@ import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/ui/icons"
 import { toast } from "sonner"
 import GithubButton from "@/components/ui/GithubButton"
+import {useForm,type FieldValues, } from 'react-hook-form'
+
 
 export default function SignInForm() {
-   const [isLoading, setIsLoading] = useState<boolean>(false)
-   const [email, setEmail] = useState('')
-   const [password, setPassword] = useState('')
+
+  const {register, handleSubmit, reset, formState:{errors, isSubmitting}} = useForm()   
    const router = useRouter()
 
    
-   const handleSubmit = async(e:FormEvent<HTMLFormElement>)=>{
-      e.preventDefault()
+   const onSubmit = async(data:FieldValues)=>{
+     try {
 
-    try {
-      setIsLoading(true)
-      const {error} = await supabaseClient.auth.signInWithPassword(
-      {
-         email,
-         password,
-      }
-    )
+     const {error}= await supabaseClient.auth.signInWithPassword({
+        email:data.email,
+        password:data.password
+      })
 
-    if(error){
-      alert(error.message)
-    }else{
-    
-      router.push('/')
+      if(error){
+        toast.error('Wrong login Credentials')
+      }else{
+        router.push('/')
       router.refresh()
-
-    }
+      }
+     
+     } catch (error) {
+      toast.error('Wrong login Credentials')
       
-    } catch (error) {
-      toast.error('something went wrong')
-      
-      
-    }finally{
-      setIsLoading(false)
-    }
-    
-
-
+     }
+     finally{
+      reset()
+     } 
    }
 
   return (
     <div>
-       <form onSubmit={handleSubmit}>
+       <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid w-full items-center gap-2">
                <Label htmlFor="email">Email</Label>
                <Input
-               id="email"
-               value={email}
-               onChange={(e)=>setEmail(e.target.value)}
+               type="text"
+               {...register('email',{required:'Name is required'})}        
                
                />
+               {errors.email&&(<p className="text-xs text-red-500">
+                {`${errors.email.message}`}
+               </p>)}
 
                <Label htmlFor="password">Password</Label>
                <Input
                type="password"
-               id="password"
-               value={password}
-               onChange={(e)=>setPassword(e.target.value)}               
+               {...register('password', {required:'Password is required'})}
+                            
                />
+                {errors.password&&(<p className="text-xs text-red-500">
+                {`${errors.password.message}`}
+               </p>)}
 
                <div className="flex justify-between items-center">
                   <Link href='forgotpassword'>
@@ -79,10 +74,10 @@ export default function SignInForm() {
 
                </div>
                 <Button
-                  disabled={isLoading}
+                  disabled={isSubmitting}
                   className="mt-2"                
                   >
-                      {isLoading &&(
+                      {isSubmitting &&(
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin"/>
 
                )}
