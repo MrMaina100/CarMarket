@@ -1,5 +1,4 @@
-# DISCLAMER 
-This project is actively not being maintained as i am at work and can't seem to find the time.
+
 
 # TURBO TRADER
 A web app built with Nextjs 14 and supabase where users can signup with their email or github account. After signing up user can browse around and view a variety of cars posted by other users or even sell their own car.  
