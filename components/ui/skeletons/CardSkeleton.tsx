@@ -1,12 +1,11 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
 import { cookies } from 'next/headers';
-import { createClient } from '@/lib/utilities/supabaseServer';
+import { createClient } from "@/lib/supabase/server";
 
 export async function SkeletonCards(){
 
-  const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createClient()
   const { data} = await supabase.from('cars').select()
    return(
       <>

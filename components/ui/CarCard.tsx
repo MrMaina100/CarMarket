@@ -1,59 +1,54 @@
-import {
-  Card,
-  CardContent,
-  
-} from "@/components/ui/card"
-import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
-import Image from "next/image"
-import Link from 'next/link'
+import { Separator } from '@/components/ui/separator';
+import Image from 'next/image';
+import Link from 'next/link';
+import { createClient } from '@/lib/supabase/server';
+import { CustomCard } from './customcard';
 
-import { cookies } from 'next/headers';
-import { createClient } from '@/lib/utilities/supabaseServer';
+export default async function CarCards() {
+  const supabase = createClient();
 
-export default async function CarCards() { 
-
-   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
-  const { data} = await supabase.from('cars').select().order('created_at',{ascending:false})
+  const { data } = await supabase
+    .from('cars')
+    .select('*, profiles(*)')
+    .order('created_at', { ascending: false });
   return (
-         <>
-         {
-            data ? (
-               data.map((apiData)=>(
-                   <Card key={apiData.id} className='w-72 overflow-hidden'>
-              <Link href={`/explore/${apiData.id}`}>
-                <CardContent  className="grid gap-2 p-2 h-34">                 
-                  <div className="h-48">
-                     <Image src={`https://uqvgrgiggdjwexfirrqu.supabase.co/storage/v1/object/public/car_images/${apiData.image_url![0]}`} alt="car photo" width={200} height={100} priority className="w-full h-full object-cover " />
-                  </div>                
-                  <Badge className='w-16' variant='outline'>
-                     {apiData.year}
-                  </Badge>                  
-                     {apiData.car_name}                  
-                  <Badge className='w-24'>
-                     {apiData.transmission}
-                  </Badge>
-                  <Separator/>               
-                     {apiData.price}                 
-                  
-               </CardContent>
-              </Link>               
-            </Card>
-               ))
-
-            ):(
-               <p>No cars to display at the moment</p>
-
-            )
-         }
-   
-         </>
-
-   
-    
-      
-
-    
-  )
+    <>
+      {data ? (
+        data.map((apiData) => (
+          <CustomCard key={apiData.id} className="w-72 overflow-hidden">
+            <Link href={`/explore/${apiData.id}`}>
+              <div className="relative h-[280px]">
+                <Image
+                  alt="car photo"
+                  src={`https://uqvgrgiggdjwexfirrqu.supabase.co/storage/v1/object/public/car_images/${
+                    apiData.image_url![0]
+                  }`}
+                  priority
+                  fill
+                  sizes="270px"
+                  className="object-cover"
+                />
+              </div>
+              <div className="flex flex-col space-y-2 mt-2">
+                <p>{apiData.car_name}</p>
+                <div className="flex space-x-1 items-center pb-2">
+                  {/* avatar */}
+                  <h4 className=" text-sm text-muted-foreground">
+                    {apiData.profiles?.name}
+                  </h4>
+                </div>
+              </div>
+              <Separator />
+              <div className="flex flex-col space-y-1 items-start pt-1">
+                <p className="text-xs text-muted-foreground">List price</p>
+                <p className="text-sm leading-none">${apiData.price}</p>
+              </div>
+            </Link>
+          </CustomCard>
+        ))
+      ) : (
+        <p>No cars to display at the moment</p>
+      )}
+    </>
+  );
 }
