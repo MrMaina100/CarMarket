@@ -10,6 +10,7 @@ export default async function CarListing({params : {id}}: {params:{id:string}}) 
   const {data:{session}} =  await supabase.auth.getSession()
  
   
+  
   if(!data){
     return <p>something went wrong, it not you its us</p>
   }

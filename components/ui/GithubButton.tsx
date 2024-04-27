@@ -1,6 +1,6 @@
 'use client'
 import { useState } from "react"
-import supabaseClient from "@/lib/utilities/supabaseClient"
+import { createClient } from "@/lib/supabase/client"
 import { Icons } from "./icons"
 import { Button } from "./button"
 import { toast } from "sonner"
@@ -8,12 +8,13 @@ import { toast } from "sonner"
 
 export default function GithubButton() {
    const [isloading, setIsLoading] = useState<boolean>(false)
+   const supabase = createClient()
 
    const handleOAuth = async ()=>{
       try {
          setIsLoading(true)
          
-         await supabaseClient.auth.signInWithOAuth({
+         await supabase.auth.signInWithOAuth({
             provider:'github',
             options:{
                redirectTo: `${location.origin}/api/auth/confirm`

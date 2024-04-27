@@ -5,24 +5,34 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu"
+import { PersonIcon } from "@radix-ui/react-icons"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import supabaseClient from "@/lib/utilities/supabaseClient"
 
-import Link from 'next/link';
-import { PersonIcon } from '@radix-ui/react-icons';
 
-import { createClient } from '@/lib/supabase/client';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
-export default async function ProfileComponent() {
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  const userid = user?.id;
-  const { data } = await supabase
-    .from('profiles')
-    .select('avatar_url')
-    .eq('id', userid as string);
+export default function ProfileComponent() {
+
+  const router = useRouter()
+  const handleLogout = async ()=>{
+    //create a supabase instance  
+
+   const {error} = await supabaseClient.auth.signOut()
+   if(error){
+    alert('something went wrong')
+   }else{
+    
+    router.push('/signin')
+    router.refresh()
+
+   }
+  }
+
+  
+
+  
   return (
     <>
       <DropdownMenu>
