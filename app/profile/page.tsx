@@ -19,7 +19,7 @@ export default async function page() {
   const { data: loggedInUser } = await supabase
     .from('profiles')
     .select()
-    .eq('user_id', userid as string)
+    .eq('id', userid as string)
     .single();
 
   if (!user) {

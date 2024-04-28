@@ -5,39 +5,22 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { PersonIcon } from "@radix-ui/react-icons"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import supabaseClient from "@/lib/utilities/supabaseClient"
+} from '@/components/ui/dropdown-menu';
+import { PersonIcon } from '@radix-ui/react-icons';
+import Link from 'next/link';
 
+import { createClient } from '@/lib/supabase/server';
+import { Avatar, AvatarFallback, AvatarImage } from './avatar';
+import { Button } from './button';
 
+export default function ProfileComponent({data}:any) {
+  const supabase = createClient();
 
-export default function ProfileComponent() {
-
-  const router = useRouter()
-  const handleLogout = async ()=>{
-    //create a supabase instance  
-
-   const {error} = await supabaseClient.auth.signOut()
-   if(error){
-    alert('something went wrong')
-   }else{
-    
-    router.push('/signin')
-    router.refresh()
-
-   }
-  }
-
-  
-
-  
   return (
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Avatar>
+          {/* <Avatar>
             {data?.map((profile) => (
               <div key={profile.avatar_url}>
                 <AvatarImage src={`${profile.avatar_url}`} />
@@ -46,7 +29,8 @@ export default function ProfileComponent() {
             <AvatarFallback>
               <PersonIcon />
             </AvatarFallback>
-          </Avatar>
+          </Avatar> */}
+          <Button>p</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
           <DropdownMenuItem>
