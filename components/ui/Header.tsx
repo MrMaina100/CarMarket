@@ -12,11 +12,13 @@ export default async function Header() {
 
   return (
     <>
+
+     
       <div className=" p-2 flex justify-between relative z-20 ">
         <h1 className="font-bold ">Turbo Trader</h1>
 
         {user ? (
-          <ProfileComponent />
+          <ProfileComponent data={user} />
         ) : (
           <div className="flex items-center space-x-5">
             <Button asChild variant="outline">
