@@ -9,28 +9,21 @@ import {
 import { PersonIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 
-import { createClient } from '@/lib/supabase/server';
 import { Avatar, AvatarFallback, AvatarImage } from './avatar';
-import { Button } from './button';
 
-export default function ProfileComponent({data}:any) {
-  const supabase = createClient();
-
+export default function ProfileComponent({ data }: any) {
   return (
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          {/* <Avatar>
-            {data?.map((profile) => (
-              <div key={profile.avatar_url}>
-                <AvatarImage src={`${profile.avatar_url}`} />
-              </div>
-            ))}
+          <Avatar>
+            <AvatarImage
+              src={`https://uqvgrgiggdjwexfirrqu.supabase.co/storage/v1/object/public/car_images/${data.avatar_url}`}
+            />
             <AvatarFallback>
               <PersonIcon />
             </AvatarFallback>
-          </Avatar> */}
-          <Button>p</Button>
+          </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
           <DropdownMenuItem>

@@ -11,6 +11,10 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar"
 import { PersonIcon } from '@radix-ui/react-icons';
+import UpdateListing from '@/components/ui/UpdateListing';
+import DeleteListing from '@/components/ui/DeleteListing';
+
+
 type Cars = Database['public']['Tables']['cars']['Row'];
 type loggedInUser = Database['public']['Tables']['profiles']['Row'];
 
@@ -84,6 +88,11 @@ export default function ProfileComponent({
                       </p>
                     </div>
                   </Link>
+                  <div className='flex space-x-1 pt-2'>
+                    <UpdateListing id={listedCars.id}/>
+                    <DeleteListing id={listedCars.id}/>
+                     
+                  </div>
                 </CustomCard>
               ))}
             </>

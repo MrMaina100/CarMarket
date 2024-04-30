@@ -1,5 +1,3 @@
-'use client';
-
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -10,69 +8,31 @@ import { Icons } from '@/components/ui/icons';
 import { toast } from 'sonner';
 import { CustomAuthCard, CardHeader,} from '@/components/ui/custom-auth-card';
 //react hook-form
-import { useForm, type FieldValues } from 'react-hook-form';
+import {useForm} from 'react-hook-form'
 
-export default function CreatePostForm({ user }: { user: User }) {
-  const route = useRouter();
-  const supabase = createClient();
+type Data = Database['public']['Tables']['cars']['Row'];
+
+export default function EditPostForm({data}:{data:Data}) {
+
   const {
     register,
     reset,
     handleSubmit,
     formState: { isSubmitting, errors },
-  } = useForm();
-
-  const onSubmit = async (data: FieldValues) => {
-    if (user) {
-      try {
-        //file upload
-        const imageUrls: string[] = [];
-
-        for (const file of data.image_url) {
-          const fileExt = file.name.split('.').pop();
-          const filepath = `/${user!.id}-${Math.random()}.${fileExt}`;
-
-          const { data: responseData, error } = await supabase.storage
-            .from('car_images')
-            .upload(filepath, file);
-
-          if (error) {
-            toast.error('Image uploads failed');
-          } else {
-            imageUrls.push(responseData.path);
-          }
-        }
-
-        // @ts-expect-error
-
-        await supabase.from('cars').insert({
-          ...data,
-          user_id: user.id,
-          image_url: imageUrls,
-        });
-      } catch (error) {
-        toast.error('something went wrong');
-        console.log(error);
-      } finally {
-        toast.success('Post created successfully');
-        reset();
-        route.push('/explore');
-        route.refresh();
-      }
-    }
-  };
-
+  } = useForm()
+  
   return (
     <div className="flex justify-center">
       <CustomAuthCard className="w-[600px] p-4">
         <CardHeader>
           
         </CardHeader>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-1 ">
+        <form  className="flex flex-col space-y-1 ">
           <div className="grid gap-2 items-center">
             <Label htmlFor="car_name">Car Name</Label>
             <Input
               type="text"
+              defaultValue={data.car_name}
               {...register('car_name', {
                 required: 'please fill in the field',
               })}
@@ -84,6 +44,7 @@ export default function CreatePostForm({ user }: { user: User }) {
             <Label htmlFor="year">Year</Label>
             <Input
               type="text"
+              defaultValue={data.year}
               {...register('year', { required: 'please fill in the field' })}
             />
             {errors.year && (
@@ -93,6 +54,7 @@ export default function CreatePostForm({ user }: { user: User }) {
             <Label htmlFor="engine_size">Engine Size</Label>
             <Input
               type="text"
+              defaultValue={data.engine_size}
               {...register('engine_size', {
                 required: 'please fill in the field',
               })}
@@ -104,6 +66,7 @@ export default function CreatePostForm({ user }: { user: User }) {
             <Label htmlFor="drive">Drive</Label>
             <Input
               type="text"
+              defaultValue={data.drive}
               {...register('drive', { required: 'please fill in the field' })}
             />
             {errors.drive && (
@@ -113,6 +76,7 @@ export default function CreatePostForm({ user }: { user: User }) {
             <Label htmlFor="fuel_type">Fuel type</Label>
             <Input
               type="text"
+              defaultValue={data.fuel_type}
               {...register('fuel_type', {
                 required: 'please fill in the field',
               })}
@@ -124,6 +88,7 @@ export default function CreatePostForm({ user }: { user: User }) {
             <Label htmlFor="transmission">Transmission</Label>
             <Input
               type="text"
+              defaultValue={data.transmission}
               {...register('transmission', {
                 required: 'please fill in the field',
               })}
@@ -135,6 +100,7 @@ export default function CreatePostForm({ user }: { user: User }) {
             <Label htmlFor="mileage">Mileage</Label>
             <Input
               type="text"
+              defaultValue={data.mileage}
               {...register('mileage', { required: 'please fill in the field' })}
             />
             {errors.mileage && (
@@ -144,6 +110,7 @@ export default function CreatePostForm({ user }: { user: User }) {
             <Label htmlFor="location">Location</Label>
             <Input
               type="text"
+              defaultValue={data.location}
               {...register('location', {
                 required: 'please fill in the field',
               })}
@@ -155,6 +122,7 @@ export default function CreatePostForm({ user }: { user: User }) {
             <Label htmlFor="price">Price</Label>
             <Input
               type="text"
+              defaultValue={data.price}
               {...register('price', { required: 'please fill in the field' })}
             />
             {errors.price && (
@@ -165,6 +133,7 @@ export default function CreatePostForm({ user }: { user: User }) {
             <Label htmlFor="image_url">Upload Images</Label>
             <Input
               type="file"
+              defaultValue={data.image_url}
               accept="image/*"
               {...register('image_url', { required: 'Field cannot be empty' })}
               multiple

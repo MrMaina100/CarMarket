@@ -9,6 +9,7 @@ export default async function Header() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  const {data} = await supabase.from('profiles').select('avatar_url').eq('id', user?.id as string).single()
 
   return (
     <>
@@ -18,7 +19,7 @@ export default async function Header() {
         <h1 className="font-bold ">Turbo Trader</h1>
 
         {user ? (
-          <ProfileComponent data={user} />
+          <ProfileComponent data={data} />
         ) : (
           <div className="flex items-center space-x-5">
             <Button asChild variant="outline">
