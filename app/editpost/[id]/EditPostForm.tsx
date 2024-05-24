@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -8,7 +10,7 @@ import { Icons } from '@/components/ui/icons';
 import { toast } from 'sonner';
 import { CustomAuthCard, CardHeader,} from '@/components/ui/custom-auth-card';
 //react hook-form
-import {useForm} from 'react-hook-form'
+import { useForm } from 'react-hook-form';
 
 type Data = Database['public']['Tables']['cars']['Row'];
 

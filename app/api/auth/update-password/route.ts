@@ -1,22 +1,19 @@
-import { createClient } from '@/lib/utilities/supabaseServer'
-import { cookies } from 'next/headers'
-import { NextResponse } from 'next/server'
+import { createClient } from '@/lib/supabase/server';
+import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
 
+export async function GET(request: Request) {
+  const requestUrl = new URL(request.url);
+  const code = requestUrl.searchParams.get('code');
 
-export async function GET(request: Request){
-   const requestUrl = new URL(request.url)
-   const code = requestUrl.searchParams.get('code')
-   const cookieStore = cookies()
+  if (code) {
+    const supabase = createClient();
+    await supabase.auth.exchangeCodeForSession(code);
 
-   if(code){
-      const supabase = createClient(cookieStore)
-      await supabase.auth.exchangeCodeForSession(code)
+    return NextResponse.redirect(`${requestUrl.origin}/resetpassord`);
+  }
 
-      return NextResponse.redirect(`${requestUrl.origin}/resetpassord`)
-   }
-
-   return NextResponse.redirect(`${requestUrl.origin}/signin`)
-
+  return NextResponse.redirect(`${requestUrl.origin}/signin`);
 }
 
 //breaking down the code for future users or code reviewers lol

@@ -57,10 +57,10 @@ importers:
         specifier: ^0.2.1
         version: 0.2.1(next@14.0.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0
       react-dom:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       react-hook-form:
         specifier: ^7.49.3
@@ -71,42 +71,45 @@ importers:
       sonner:
         specifier: ^1.2.4
         version: 1.2.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      supabase:
-        specifier: ^1.115.5
-        version: 1.115.5
       tailwind-merge:
         specifier: ^2.0.0
         version: 2.0.0
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.3.5)
+      zod:
+        specifier: ^3.23.5
+        version: 3.23.5
     devDependencies:
       '@types/node':
-        specifier: ^20
+        specifier: ^20.9.0
         version: 20.9.0
       '@types/react':
-        specifier: ^18
+        specifier: ^18.2.37
         version: 18.2.37
       '@types/react-dom':
-        specifier: ^18
+        specifier: ^18.2.15
         version: 18.2.15
       autoprefixer:
-        specifier: ^10.0.1
+        specifier: ^10.4.16
         version: 10.4.16(postcss@8.4.31)
       eslint:
-        specifier: ^8
+        specifier: ^8.53.0
         version: 8.53.0
       eslint-config-next:
         specifier: 14.0.2
         version: 14.0.2(eslint@8.53.0)(typescript@5.2.2)
       postcss:
-        specifier: ^8
+        specifier: ^8.4.31
         version: 8.4.31
+      supabase:
+        specifier: ^1.115.5
+        version: 1.115.5
       tailwindcss:
-        specifier: ^3.3.0
+        specifier: ^3.3.5
         version: 3.3.5
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
 packages:
@@ -851,8 +854,8 @@ packages:
     resolution: {integrity: sha512-QOSvevhslijgYwRx6Rv7zKdMF8lbRmx+uQGx2+vDc+KI/eBnsy9kit5aj23AgGu3pa4t9AgwbnXWqS+iOY+2aA==}
     engines: {node: '>= 6'}
 
-  caniuse-lite@1.0.30001562:
-    resolution: {integrity: sha512-kfte3Hym//51EdX4239i+Rmp20EsLIYGdPkERegTgU19hQWCRhsRFGKHTliUlsry53tv17K7n077Kqa0WJU4ng==}
+  caniuse-lite@1.0.30001618:
+    resolution: {integrity: sha512-p407+D1tIkDvsEAPS22lJxLQQaG8OTBEqo0KhzfABGk0TU4juBNDSfH0hyAp/HRyx+M8L17z/ltyhxh27FTfQg==}
 
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
@@ -2156,6 +2159,9 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
+  zod@3.23.5:
+    resolution: {integrity: sha512-fkwiq0VIQTksNNA131rDOsVJcns0pfVUjHzLrNBiF/O/Xxb5lQyEXkhZWcJ7npWsYlvs+h0jFWXXy4X46Em1JA==}
+
 snapshots:
 
   '@aashutoshrathi/word-wrap@1.2.6': {}
@@ -2873,7 +2879,7 @@ snapshots:
   autoprefixer@10.4.16(postcss@8.4.31):
     dependencies:
       browserslist: 4.22.1
-      caniuse-lite: 1.0.30001562
+      caniuse-lite: 1.0.30001618
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -2910,7 +2916,7 @@ snapshots:
 
   browserslist@4.22.1:
     dependencies:
-      caniuse-lite: 1.0.30001562
+      caniuse-lite: 1.0.30001618
       electron-to-chromium: 1.4.583
       node-releases: 2.0.13
       update-browserslist-db: 1.0.13(browserslist@4.22.1)
@@ -2933,7 +2939,7 @@ snapshots:
 
   camelcase-css@2.0.1: {}
 
-  caniuse-lite@1.0.30001562: {}
+  caniuse-lite@1.0.30001618: {}
 
   chalk@4.1.2:
     dependencies:
@@ -3782,7 +3788,7 @@ snapshots:
       '@next/env': 14.0.2
       '@swc/helpers': 0.5.2
       busboy: 1.6.0
-      caniuse-lite: 1.0.30001562
+      caniuse-lite: 1.0.30001618
       postcss: 8.4.31
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -4431,3 +4437,5 @@ snapshots:
   yaml@2.3.4: {}
 
   yocto-queue@0.1.0: {}
+
+  zod@3.23.5: {}

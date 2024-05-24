@@ -41,7 +41,7 @@ export default async function CarCards() {
               <Separator />
               <div className="flex flex-col space-y-1 items-start pt-1">
                 <p className="text-xs text-muted-foreground">List price</p>
-                <p className="text-sm leading-none">${apiData.price}</p>
+                <p className="text-sm leading-none">{apiData.price}</p>
               </div>
             </Link>
           </CustomCard>

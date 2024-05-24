@@ -23,7 +23,7 @@ export default function ProfileComponent({
   loggedInUser,
 }: {
   cars: Cars[] | null;
-  loggedInUser: loggedInUser;
+  loggedInUser: loggedInUser | null;
 }) {
   return (
     <>
@@ -32,7 +32,7 @@ export default function ProfileComponent({
         <div className="flex flex-col space-y-2 items-center">
           {/*avatar will go here */}
           <Avatar className='w-[120px] h-[120px]'>
-            <AvatarImage src={`https://uqvgrgiggdjwexfirrqu.supabase.co/storage/v1/object/public/car_images/${loggedInUser.avatar_url}`} alt='profilepic'/>
+            <AvatarImage src={`https://uqvgrgiggdjwexfirrqu.supabase.co/storage/v1/object/public/car_images/${loggedInUser?.avatar_url}`} alt='profilepic'/>
             <AvatarFallback>
               <PersonIcon/>
             </AvatarFallback>
